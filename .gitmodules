@@ -1,6 +1,6 @@
-[submodule "server"]
-	path = server
-	url = https://github.com/thekayshawn/todo__node-server.git
 [submodule "client"]
 	path = client
 	url = https://github.com/thekayshawn/todo__node-client.git
+[submodule "server"]
+	path = server
+	url = https://github.com/thekayshawn/todo__node-server.git
