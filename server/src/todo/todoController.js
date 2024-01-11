@@ -5,7 +5,11 @@ import { Controller } from "../types";
 import { todoModel } from "./todoModel";
 import { send400, send404, send405, send500, sendJSON } from "../utils";
 
-function getTodoId(query: ParsedUrlQuery): number | undefined {
+/**
+ * @param {ParsedUrlQuery} query
+ * @returns {number | undefined}
+ */
+function getTodoId(query) {
   // Get the ID from the query
   const id = query.id?.toString();
 
@@ -17,7 +21,11 @@ function getTodoId(query: ParsedUrlQuery): number | undefined {
   return parseInt(id);
 }
 
-function getTodos({ res, query }: Controller) {
+/**
+ * @param {Controller} controller
+ * @returns {void}
+ */
+function getTodos({ res, query }) {
   const id = getTodoId(query);
 
   // Return todo by id if it exists
@@ -52,7 +60,11 @@ function getTodos({ res, query }: Controller) {
     });
 }
 
-function postTodo({ req, res }: Controller) {
+/**
+ * @param {Controller} param0
+ * @returns {void}
+ */
+function postTodo({ req, res }) {
   let body = "";
 
   req.on("data", (chunk) => {
@@ -67,8 +79,11 @@ function postTodo({ req, res }: Controller) {
   req.on("end", () => {
     const params = JSON.parse(body);
 
-    // Get the title from the query
-    const title: string | undefined = params.title;
+    /**
+     * @type {string | undefined}
+     * Get the title from the query
+     */
+    const title = params.title;
 
     // Send 400 if the title is missing
     if (!title) {
@@ -88,7 +103,11 @@ function postTodo({ req, res }: Controller) {
   });
 }
 
-function patchTodo({ req, res, query }: Controller) {
+/**
+ * @param {Controller} param0
+ * @returns {void}
+ */
+function patchTodo({ req, res, query }) {
   const id = query.id?.toString();
   const todoId = parseInt(id || "");
 
@@ -111,9 +130,15 @@ function patchTodo({ req, res, query }: Controller) {
   req.on("end", () => {
     const params = JSON.parse(body);
 
-    // Get the data from the query
-    const title: string | undefined = params.title;
-    const completed: boolean | undefined = params.completed;
+    /**
+     * @type {string | undefined}
+     */
+    const title = params.title;
+
+    /**
+     * @type {boolean | undefined}
+     */
+    const completed = params.completed;
 
     // Send 400 if no data is provided
     if (!title && completed === undefined) {
@@ -138,7 +163,11 @@ function patchTodo({ req, res, query }: Controller) {
   });
 }
 
-function deleteTodo({ res, query }: Controller) {
+/**
+ * @param {Controller} param0
+ * @returns {void}
+ */
+function deleteTodo({ res, query }) {
   const id = getTodoId(query);
 
   if (!id) {
@@ -157,7 +186,11 @@ function deleteTodo({ res, query }: Controller) {
     });
 }
 
-export function todoController({ req, res, query }: Controller) {
+/**
+ * @param {Controller} param0
+ * @returns {void}
+ */
+export function todoController({ req, res, query }) {
   // Get the HTTP method
   const method = req.method?.toLowerCase();
 
